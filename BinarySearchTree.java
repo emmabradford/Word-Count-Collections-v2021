@@ -8,18 +8,30 @@ import java.util.*;
 public class BinarySearchTree<T extends Comparable<T>> implements WordCountCollection<T>
 {
     //constructors
-    
+    BinaryNode<T> root = null;
     
     // Returns the number of elements in this collection.
     public int size()
     {
-        return -1;
+        return size(root);
+    }
+    
+    private int size(BinaryNode<T> r)
+    {
+        if(r == null)
+        {
+            return 0;
+        }
+        else
+        {
+            return 1 + size(r.getLeft()) + size(r.getRight());
+        }
     }
     
     // Returns true if this collection is empty; otherwise, returns false.
     public boolean isEmpty()
     {
-        return false;
+        return root ==null;
     }
 
     // Adds element to this collection.
