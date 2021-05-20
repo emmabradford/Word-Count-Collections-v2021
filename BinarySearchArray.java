@@ -33,37 +33,43 @@ public class BinarySearchArray<T extends Comparable<T>> implements WordCountColl
     // Precondition: element is not already in the collection
     public void add (T element)
     {
-        int high = this.size();
-        int low = 0;
-        if (high == 0)
-        {
-            arr.add(0, element);
-        }
-        while(low <= high)
-        {
-            int mid = (low + high) / 2;
-            if (arr.get(mid).compareTo(element) < 0)
-            {
-                low = mid + 1;
-            }
-            else if (arr.get(mid).compareTo(element) > 0)
-            {
-            
-            }
-        }
+        int i = fetch(element, 0, size() - 1);
+        arr.add(i, element);
     }
     
     // Returns the element of this colletion if contains an element e such that
     // e.compareTo(element) == 0; otherwise, returns null.
     public T fetch(T element)
     {
+        int index = fetch(element, 0, size() - 1);
+        if(index >= size())
+            return null;
+        T result = arr.get(index);
+        if(result.compareTo(element) == 0)
+            return result;
         return null;
+    }
+    
+    private int fetch(T element, int first, int last)
+    {
+        int mid = (first + last) / 2;
+        if (first > last)
+            return first;
+        int compare = element.compareTo(arr.get(mid));
+        if (compare < 0)
+            return fetch(element, first, mid - 1);
+        else if (compare > 0)
+            return fetch(element, mid + 1, last);
+        return mid;
     }
 
     // Removes all elements in this collection
     public void clear()
     {
-    
+        while(!isEmpty())
+        {
+            arr.remove(0);
+        }
     }
     
     // generates a list of the elements in the collection
@@ -71,7 +77,7 @@ public class BinarySearchArray<T extends Comparable<T>> implements WordCountColl
     public List<T> createList()
     {
         List<T> list = new ArrayList<T>();
-        for (T element : list)
+        for (T element : arr)
         {
             list.add(element);
         }
